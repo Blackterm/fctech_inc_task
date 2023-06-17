@@ -11,8 +11,7 @@ class DataFcTechBaseRepository implements FcTechBaseRepository {
   String baseUrl = "https://jsonplaceholder.typicode.com/";
 
   @override
-  Future<Response> executeFcTechRequest(
-      String requestType, String path, header, body) async {
+  Future<Response> executeFcTechRequest(String requestType, String path) async {
     Response response;
     var url = Uri.parse(baseUrl + path);
 
@@ -21,22 +20,9 @@ class DataFcTechBaseRepository implements FcTechBaseRepository {
         case "GET":
           response = await http.get(
             url,
-            headers: header,
           );
           break;
-        case "POST":
-          response = await http.post(
-            url,
-            headers: header,
-            body: body,
-          );
-          break;
-        case "DELETE":
-          response = await http.delete(
-            url,
-            headers: header,
-          );
-          break;
+
         default:
           throw Exception("");
       }

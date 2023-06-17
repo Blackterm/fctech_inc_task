@@ -1,11 +1,13 @@
 import 'package:fctech_inc_task/src/app/pages/user_profile/user_profile_controller.dart';
+import 'package:fctech_inc_task/src/data/repositories/data_home_page_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 class UserProfileView extends View {
   @override
   State<StatefulWidget> createState() {
-    return _UserProfileViewState(UserProfileController());
+    return _UserProfileViewState(
+        UserProfileController(DataHomepageRepository()));
   }
 }
 
