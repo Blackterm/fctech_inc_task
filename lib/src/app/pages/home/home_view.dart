@@ -1,6 +1,8 @@
 import 'package:fctech_inc_task/src/app/constants/constants.dart';
 import 'package:fctech_inc_task/src/app/pages/home/home_controller.dart';
+import 'package:fctech_inc_task/src/app/pages/user_profile/user_profile_view.dart';
 import 'package:fctech_inc_task/src/data/repositories/data_home_page_repository.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
@@ -21,8 +23,53 @@ class _HomeViewState extends ViewState<HomeView, HomeController> {
     return Scaffold(
         key: globalKey,
         appBar: AppBar(
+          toolbarHeight: size.height * 0.15,
           backgroundColor: cPrimaryColor,
-          title: Text('User'),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
+              bottom: Radius.circular(30),
+            ),
+          ),
+          title: Column(
+            children: [
+              Text('USERS'),
+              SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8),
+                child: TextFormField(
+                  style: TextStyle(
+                    color: Colors.black,
+                  ),
+                  cursorColor: Colors.grey,
+                  decoration: InputDecoration(
+                    fillColor: Colors.white,
+                    filled: true,
+                    hintText: 'Search',
+                    hintStyle: TextStyle(
+                      color: Colors.grey,
+                    ),
+                    prefixIcon: Icon(
+                      Icons.search,
+                      color: Colors.grey,
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide(
+                        color: Colors.grey,
+                        width: 2,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide(color: Colors.white, width: 2),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
         body: Container(
           child: ControlledWidgetBuilder<HomeController>(
@@ -38,11 +85,18 @@ class _HomeViewState extends ViewState<HomeView, HomeController> {
                           bottom: 10,
                         ),
                         child: ListTile(
+                          onTap: () => Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => UserProfileView(
+                                  controller.usersList?[index].id.toString()),
+                            ),
+                          ),
                           leading: ClipRRect(
                             borderRadius: BorderRadius.circular(30),
                             child: FadeInImage(
                               image: NetworkImage(
-                                  'https://randomuser.me/api/portraits/men/$index.jpg'),
+                                  'https://randomuser.me/api/portraits/men/${controller.usersList?[index].id.toString()}.jpg'),
                               fit: BoxFit.fill,
                               width: size.width * 0.12,
                               placeholder:
